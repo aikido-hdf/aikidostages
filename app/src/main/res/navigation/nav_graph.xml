@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="stages.aikidoliguehdf.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_stagePlaceFragment"
+            app:destination="@id/stagePlaceFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_stageCatFragment"
+            app:destination="@id/stageCatFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_stageListFragment"
+            app:destination="@id/stageListFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_stageDetailFragment"
+            app:destination="@id/stageDetailFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_favListFragment"
+            app:destination="@id/favListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stagePlaceFragment"
+        android:name="stages.aikidoliguehdf.StagePlaceFragment"
+        android:label="fragment_stage_place"
+        tools:layout="@layout/fragment_stage_place" >
+        <action
+            android:id="@+id/action_stagePlaceFragment_to_startFragment"
+            app:destination="@id/startFragment" />
+        <action
+            android:id="@+id/action_stagePlaceFragment_to_stageListFragment"
+            app:destination="@id/stageListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stageCatFragment"
+        android:name="stages.aikidoliguehdf.StageCatFragment"
+        android:label="fragment_stage_cat"
+        tools:layout="@layout/fragment_stage_cat" >
+        <action
+            android:id="@+id/action_stageCatFragment_to_startFragment"
+            app:destination="@id/startFragment" />
+        <action
+            android:id="@+id/action_stageCatFragment_to_stageListFragment"
+            app:destination="@id/stageListFragment" />
+        <action
+            android:id="@+id/action_stageCatFragment_to_startFragment2"
+            app:destination="@id/startFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stageDetailFragment"
+        android:name="stages.aikidoliguehdf.StageDetailFragment"
+        android:label="fragment_stage_detail"
+        tools:layout="@layout/fragment_stage_detail" >
+        <argument android:name="IdStage"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_stageDetailFragment_to_stageListFragment"
+            app:destination="@id/stageListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stageListFragment"
+        android:name="stages.aikidoliguehdf.StageListFragment"
+        android:label="fragment_stage_list"
+        tools:layout="@layout/fragment_stage_list" >
+        <action
+            android:id="@+id/action_stageListFragment_to_stageDetailFragment"
+            app:destination="@id/stageDetailFragment" />
+        <argument
+            android:name="IdCategory"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_stageListFragment_to_startFragment"
+            app:destination="@id/startFragment" />
+        <argument
+            android:name="idPlaces"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
+    </fragment>
+    <fragment
+        android:id="@+id/favListFragment"
+        android:name="stages.aikidoliguehdf.FavListFragment"
+        android:label="fragment_fav_list"
+        tools:layout="@layout/fragment_fav_list" >
+        <action
+            android:id="@+id/action_favListFragment_to_stageDetailFragment"
+            app:destination="@id/stageDetailFragment" />
+    </fragment>
+</navigation>
