@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="deletecolor">#662521</color>
+    <color name="backgroundList">#FF000000</color>
+    <color name="fontList">#CFCFCF</color>
 </resources>

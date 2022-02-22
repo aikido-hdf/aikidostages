@@ -61,7 +61,6 @@ data class StagesFavMap(
 )
 
 
-
 data class StagesWithCategories(
     @Embedded var stages: Stages,
     @Relation(

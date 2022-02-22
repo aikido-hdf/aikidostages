@@ -3,14 +3,12 @@ package stages.aikidoliguehdf
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
 import stages.aikidoliguehdf.adapter.ListFavAdapter
-import stages.aikidoliguehdf.data.*
+import stages.aikidoliguehdf.data.Stages
+import stages.aikidoliguehdf.data.StagesRoomDatabase
 import stages.aikidoliguehdf.databinding.FragmentFavListBinding
-
 
 
 class FavListFragment<DataBaseHandler>  : Fragment(R.layout.fragment_fav_list) {
@@ -28,19 +26,13 @@ class FavListFragment<DataBaseHandler>  : Fragment(R.layout.fragment_fav_list) {
     private var mContext: Context? = null
     private lateinit var binding: FragmentFavListBinding
 
-    private lateinit var deletedItem : String
-    //private val args : FavListFragmentArgs by navArgs<FavListFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        mContext = getActivity()
+    ): View {
+        mContext = activity
 
 
         // Inflate the layout for this fragment
@@ -70,7 +62,7 @@ class FavListFragment<DataBaseHandler>  : Fragment(R.layout.fragment_fav_list) {
 
                         deleteFav(idfav)
 
-                        Snackbar.make(binding.recyclerView,"Supprimer ce favori ?", Snackbar.LENGTH_LONG)
+                        Snackbar.make(binding.recyclerView,"Favori supprimé", Snackbar.LENGTH_LONG)
                         .show()
 
                     }
@@ -80,7 +72,7 @@ class FavListFragment<DataBaseHandler>  : Fragment(R.layout.fragment_fav_list) {
         val touchHelper = ItemTouchHelper(swipegesture)
         touchHelper.attachToRecyclerView(binding.recyclerView)
 
-        adapter.setOnItemClickListener(object : ListFavAdapter.onItemClickListener {
+        adapter.setOnItemClickListener(object : ListFavAdapter.OnItemClickListener {
 
             override fun onItemClick(position: Int) {
                 val idStage = adapter.items[position].idstages

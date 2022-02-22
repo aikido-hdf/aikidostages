@@ -12,22 +12,19 @@ class ListPlacesAdapter: RecyclerView.Adapter<ListPlacesAdapter.ListPlacesViewHo
     var places = mutableListOf<Places>()
     var placesFiltered = mutableListOf<Places>()
 
-    private lateinit var mListener : onItemClickListener
+    private lateinit var mListener : OnItemClickListener
 
-    interface onItemClickListener{
+    interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
 
-    fun setOnItemClickListener(listener: ListPlacesAdapter.onItemClickListener){
+    fun setOnItemClickListener(listener: OnItemClickListener){
         mListener = listener
     }
 
     fun setPlacesList(places: List<Places>) {
-
-        var placesFiltered = places.filter { it.count > "0" }
+        val placesFiltered = places.filter { it.count > "0" }
         this.placesFiltered = placesFiltered.toMutableList()
-        notifyDataSetChanged()
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPlacesViewHolder {
@@ -41,9 +38,9 @@ class ListPlacesAdapter: RecyclerView.Adapter<ListPlacesAdapter.ListPlacesViewHo
     }
 
 
-    class ListPlacesViewHolder (val binding: ListPlacesBinding, listener: ListPlacesAdapter.onItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ListPlacesViewHolder (val binding: ListPlacesBinding, listener:OnItemClickListener): RecyclerView.ViewHolder(binding.root) {
         init{
-            itemView.setOnClickListener(){
+            itemView.setOnClickListener{
                 listener.onItemClick(adapterPosition)
             }
         }

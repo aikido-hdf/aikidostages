@@ -1,5 +1,6 @@
 package stages.aikidoliguehdf
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -12,20 +13,19 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONTokener
 import stages.aikidoliguehdf.data.*
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
+@DelicateCoroutinesApi
+@SuppressLint("CustomSplashScreen")
 @Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity() {
 
-    lateinit var dao: StagesDao
+    private lateinit var dao: StagesDao
     lateinit var db: StagesRoomDatabase
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -33,11 +33,21 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-
+        /*connection to DB*/
         db = StagesRoomDatabase.getInstance(this)
         dao = db.stagesDao()
 
-        parseJSON()
+        /*fetch data if network OK*/
+        checkForInternet(this)
+        Log.i("check", checkForInternet(this).toString())
+        if(checkForInternet(this)){
+            parseJSON()
+            parseJSONLocs()
+        }else{
+            val toast = Toast.makeText(this,"Pas de connexion réseau",Toast.LENGTH_SHORT)
+            toast.show()
+        }
+
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -47,10 +57,13 @@ class SplashScreen : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 3000)
+        }, 4000)
     }
 
+
+    @DelicateCoroutinesApi
     @RequiresApi(Build.VERSION_CODES.O)
+    /*JSON with list of courses and list of categories*/
     fun parseJSON() {
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -172,17 +185,17 @@ class SplashScreen : AppCompatActivity() {
 
                         val listcat = mutableListOf(id.toLong())
 
-                        for (i in listcat) {
+                        for (item in listcat) {
                             //val tempMap = mutableMapOf<String, String>()
-                            val item = id.toString()
-                            val test = db.stagesDao().getByCat(item)
+                            val items = id.toString()
+                            val test = db.stagesDao().getByCat(items)
 
-                            for (y in test) {
-                                val idstages = y.idstages.toString()
+                            for (value in test) {
+                                val idstages = value.idstages.toString()
                                 val newList = mutableListOf<StagesCatMap>()
 
                                 listcat.forEach {
-                                    newList += StagesCatMap(idstages, item)
+                                    newList += StagesCatMap(idstages, items)
                                 }
                                 dao.insertAllStagesCatMap(newList)
 
@@ -193,42 +206,15 @@ class SplashScreen : AppCompatActivity() {
             } else {
                 //Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
             }
-            val urlLocations =
-                URL("https://aikido-hdf.fr/wp-json/wp/v2/mec_location?per_page=50")
-            val httpsURLConnectionforLocations = urlLocations.openConnection() as HttpsURLConnection
-            httpsURLConnectionforLocations.setRequestProperty(
-                "Accept",
-                "application/json"
-            ) // The format of response we want to get from the server
-            httpsURLConnectionforLocations.requestMethod = "GET"
-            httpsURLConnectionforLocations.doInput = true
-            httpsURLConnectionforLocations.doOutput = false
-            // Check if the connection is successful
-            val responseCodeforLoc = httpsURLConnection.responseCode
-            if (responseCodeforLoc == HttpsURLConnection.HTTP_OK) {
-                val response = httpsURLConnection.inputStream.bufferedReader()
-                    .use { it.readText() }  // defaults to UTF-8
-                withContext(Dispatchers.Main) {
-
-                    // Convert raw JSON to pretty JSON using GSON library
-
-                    val jsonArrayLoc = JSONTokener(response).nextValue() as JSONArray
-                    for (i in 0 until jsonArrayLoc.length()) {
-
-                        val id = jsonArrayLoc.getJSONObject(i).getString("id")
-                        val name = jsonArrayLoc.getJSONObject(i).getString("name")
-                        val count = jsonArrayLoc.getJSONObject(i).getString("count")
-                        val address = jsonArrayLoc.getJSONObject(i).getString("address")
-                        val modelforLocations =
-                            Places(
-                                id, name, count, address
-                            )
-                        dao.insertAllPlaces(modelforLocations)
-                    }
-                }
 
 
-    /*fun parseJSONPlaces() {
+        }
+    }
+
+
+
+    /*JSON with list of locations*/
+    private fun parseJSONLocs() {
 
         GlobalScope.launch(Dispatchers.IO) {
             val url =
@@ -266,12 +252,12 @@ class SplashScreen : AppCompatActivity() {
                     }
                 }
             } else {
-                Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())*/
+                Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
             }
         }
     }
 
-    fun checkForInternet(context: Context): Boolean {
+    private fun checkForInternet(context: Context): Boolean {
 
         // register activity with the connectivity manager service
         val connectivityManager =

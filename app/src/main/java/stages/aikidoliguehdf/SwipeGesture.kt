@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 abstract class SwipeGesture(context: Context) : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
-    val deleteIcon = R.drawable.ic_baseline_delete_24
+    private val deleteIcon = R.drawable.ic_baseline_delete_24
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,

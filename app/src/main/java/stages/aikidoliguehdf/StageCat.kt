@@ -6,8 +6,6 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 
 class StageCat  : AppCompatActivity(R.layout.stage_cat_activity) {
-
-
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.stage_cat_activity)
@@ -18,8 +16,5 @@ class StageCat  : AppCompatActivity(R.layout.stage_cat_activity) {
                 add<StageCatFragment<Any?>>(R.id.fragmentCatContainerView)
             }
         }
-
     }
-
-
 }

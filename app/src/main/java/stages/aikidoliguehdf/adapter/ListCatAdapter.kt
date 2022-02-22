@@ -9,23 +9,21 @@ import stages.aikidoliguehdf.databinding.ListCategoriesBinding
 
 class ListCatAdapter: RecyclerView.Adapter<ListCatAdapter.ListCatViewHolder>() {
 
-    var categories = mutableListOf<Categories>()
-    var categoriesFiltered = mutableListOf<Categories>()
+   var categoriesFiltered = mutableListOf<Categories>()
 
-    private lateinit var mListener : onItemClickListener
+    private lateinit var mListener : OnItemClickListener
 
-    interface onItemClickListener{
+    interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
 
-    fun setOnItemClickListener(listener: onItemClickListener){
+    fun setOnItemClickListener(listener: OnItemClickListener){
         mListener = listener
     }
 
     fun setCatList(categories: ArrayList<Categories>) {
-        var categoriesFiltered = categories.filter { it.count > "0" }
+        val categoriesFiltered = categories.filter { it.count > "0" }
         this.categoriesFiltered = categoriesFiltered.toMutableList()
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListCatViewHolder {
@@ -38,9 +36,9 @@ class ListCatAdapter: RecyclerView.Adapter<ListCatAdapter.ListCatViewHolder>() {
         holder.binding.txtCat.text = currentItem.name
     }
 
-    class ListCatViewHolder (val binding: ListCategoriesBinding, listener: onItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ListCatViewHolder (val binding: ListCategoriesBinding, listener: OnItemClickListener): RecyclerView.ViewHolder(binding.root) {
         init{
-            itemView.setOnClickListener(){
+            itemView.setOnClickListener{
                 listener.onItemClick(adapterPosition)
             }
         }

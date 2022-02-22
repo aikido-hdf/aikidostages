@@ -30,19 +30,16 @@ import java.time.format.DateTimeFormatter
 class StageDetailFragment : Fragment() {
 
     private val args : StageDetailFragmentArgs by navArgs<StageDetailFragmentArgs>()
-    lateinit var dao: StagesDao
+    private lateinit var dao: StagesDao
     lateinit var db: StagesRoomDatabase
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?{
+    ): View{
         val binding = FragmentStageDetailBinding.inflate(layoutInflater)
         val idStage = args.idStage
 
@@ -51,12 +48,11 @@ class StageDetailFragment : Fragment() {
         val catname = getCatName(idStage).toString().replace("[","").replace("]","")
 
         /*Format Place with Address*/
-        lateinit var placeStage : String
 
-        if(item.first().places == "1"){
-            placeStage = "A définir"
+        val placeStage : String = if(item.first().places == "1"){
+            "A définir"
         }else {
-            placeStage = getPlaceName(item.first().places) + "\n" + getPlaceAddress(item.first().places)
+            getPlaceName(item.first().places) + "\n" + getPlaceAddress(item.first().places)
         }
 
         /*convert starthours*/
@@ -150,30 +146,28 @@ class StageDetailFragment : Fragment() {
 
         /*Format Date*/
         val startDate = item.first().startdate
-        //LocalDateTime.parse(startDate, DateTimeFormatter.ofPattern("dd/mm/yyyy"))
         val europeanDatePattern = "dd.MM.yyyy"
         val europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern)
-        val niceDate = europeanDateFormatter.format(LocalDate.parse(startDate.toString()))
+        val niceDate = europeanDateFormatter.format(LocalDate.parse(startDate))
 
 
         val itemTitle: TextView = binding.detItemTitle
         itemTitle.text = item.first().title
-        //val itemContent: TextView = binding.detItemContent
-        /*itemContent.text = item.first().excerpt*/
-        binding.detItemStartdate.setText("Date : $niceDate")
-        binding.detItemStartHour.setText("Horaires : " + starthours + "h"+ startminutes + " - " + endhours + "h"+ endminutes )
-        binding.detItemLink.setText("Lien : " + item.first().link)
 
-        binding.detItemCost.setText("Coût : " + item.first().cost + "€")
-        binding.detItemCat.setText("Type : $catname")
-        binding.detItemPlace.setText("Dojo : $placeStage")
+        binding.detItemStartdate.text = "Date : $niceDate"
+        binding.detItemStartHour.text = "Horaires : " + starthours + "h"+ startminutes + " - " + endhours + "h"+ endminutes
+        binding.detItemLink.text = "Lien : " + item.first().link
+
+        binding.detItemCost.text = "Coût : " + item.first().cost + "€"
+        binding.detItemCat.text = "Type : $catname"
+        binding.detItemPlace.text = "Dojo : $placeStage"
 
         val enroute = binding.fabDirection
         val calendar = binding.fabCalendar
         val addfav = binding.fabFavorite
 
         if (checkFav(idStage) != null) {
-            binding.fabFavorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24))
+            binding.fabFavorite.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_favorite_border_24))
             addfav.setOnClickListener {
                val toast = Toast.makeText(context,"Stage déjà présent dans les favoris",Toast.LENGTH_SHORT)
                 toast.show()
@@ -208,72 +202,62 @@ class StageDetailFragment : Fragment() {
         val startMill = dateStart.toInstant().epochSecond*1000
 
         //calcul date et heure de fin du stage et conversion en milliseconds
-        val dtEnd =  item.first().startdate.toString() + "T" + endhours + ":" + endminutes + ":00"
+        val dtEnd =  item.first().startdate + "T" + endhours + ":" + endminutes + ":00"
 
         val dateEnd = LocalDateTime.parse(dtEnd, DateTimeFormatter.ISO_LOCAL_DATE_TIME).atZone(zone)
         val endMill = dateEnd.toInstant().epochSecond*1000
 
         calendar.setOnClickListener {
             val calIntent = Intent(Intent.ACTION_INSERT)
-            calIntent.setData(CalendarContract.Events.CONTENT_URI)
+            calIntent.data = CalendarContract.Events.CONTENT_URI
             calIntent.putExtra(CalendarContract.Events.TITLE, item.first().title)
             calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMill)
             calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMill)
             calIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, placeStage)
-            //calIntent.putExtra(CalendarContract.Events.DTEND, timeInMilliseconds)
             startActivity(calIntent)
-
         }
-
-
         (activity as AppCompatActivity).supportActionBar?.title = item.first().title
-
         return binding.root
     }
 
 
-
     private fun getItemsById(idstages: String): List<Stages> {
-        var db = Room.databaseBuilder(
+        val db = Room.databaseBuilder(
             activity as AppCompatActivity,
             StagesRoomDatabase::class.java, "StagesDatabase"
         ).allowMainThreadQueries().build()
 
-        var stageList = db.stagesDao().loadAllByIds(idstages = idstages)
-        return stageList
+        return db.stagesDao().loadAllByIds(idstages = idstages)
 
     }
 
     private fun getCatName(idstages: String): List<String> {
-        var db = Room.databaseBuilder(
+        val db = Room.databaseBuilder(
             activity as AppCompatActivity,
             StagesRoomDatabase::class.java, "StagesDatabase"
         ).allowMainThreadQueries().build()
 
 
-        var catName = db.stagesDao().getCatName(idstages = idstages)
-        return catName
+        return db.stagesDao().getCatName(idstages = idstages)
     }
 
     private fun getPlaceName(idplace: String): String {
-        var db = Room.databaseBuilder(
+        val db = Room.databaseBuilder(
             activity as AppCompatActivity,
             StagesRoomDatabase::class.java, "StagesDatabase"
         ).allowMainThreadQueries().build()
 
 
-        var placeName = db.stagesDao().loadNamePlaceById(idplace = idplace)
-        return placeName
+        return db.stagesDao().loadNamePlaceById(idplace = idplace)
     }
     private fun getPlaceAddress(idplace: String): String {
-        var db = Room.databaseBuilder(
+        val db = Room.databaseBuilder(
             activity as AppCompatActivity,
             StagesRoomDatabase::class.java, "StagesDatabase"
         ).allowMainThreadQueries().build()
 
 
-        var placeAddress = db.stagesDao().loadAddressPlaceById(idplace = idplace)
-        return placeAddress
+        return db.stagesDao().loadAddressPlaceById(idplace = idplace)
     }
 
     private fun insertfav(idfav: Int, idstagesfav: String){
@@ -286,8 +270,7 @@ class StageDetailFragment : Fragment() {
     private fun checkFav(idstage: String): String {
         db = StagesRoomDatabase.getInstance(activity as AppCompatActivity)
         dao = db.stagesDao()
-        val favList = db.stagesDao().getFavsbyStageId(idstage = idstage )
-        return favList
+        return db.stagesDao().getFavsbyStageId(idstage = idstage)
 
     }
 }

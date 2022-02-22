@@ -3,7 +3,6 @@ package stages.aikidoliguehdf
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +31,8 @@ class StageListFragment<DataBaseHandler> : Fragment(R.layout.fragment_stage_list
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        mContext = getActivity()
+    ): View {
+        mContext = activity
 
         binding = FragmentStageListBinding.inflate(inflater, container, false)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
@@ -43,11 +42,11 @@ class StageListFragment<DataBaseHandler> : Fragment(R.layout.fragment_stage_list
         val argsPlaces = args.idPlaces.toString()
 
         if(argsCategory != "null"){
-            val idCat = '%' + argsCategory + '%'
+            val idCat = "%$argsCategory%"
             getItemsListByCat(idCat)
         }
         else if(argsPlaces != "null") {
-            val idPlace = '%' + argsPlaces + '%'
+            val idPlace = "%$argsPlaces%"
             getItemsListByPlace(idPlace)
         }else {
 
@@ -56,16 +55,11 @@ class StageListFragment<DataBaseHandler> : Fragment(R.layout.fragment_stage_list
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.title = "Liste des stages"
 
-        adapter.setOnItemClickListener(object : ListStageAdapter.onItemClickListener {
+        adapter.setOnItemClickListener(object : ListStageAdapter.OnItemClickListener {
 
             override fun onItemClick(position: Int) {
                 val idStage = adapter.items[position].idstages

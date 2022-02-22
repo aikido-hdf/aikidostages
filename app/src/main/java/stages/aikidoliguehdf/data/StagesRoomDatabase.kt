@@ -4,11 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-
 
 const val DATABASE_NAME = "StagesDatabase"
-const val DATABASE_VERSION =1
 @Database(entities = [Stages::class,Categories::class,Places::class,StagesCatMap::class, Favorites::class, StagesFavMap::class], version = 1)
 
 abstract class StagesRoomDatabase : RoomDatabase() {

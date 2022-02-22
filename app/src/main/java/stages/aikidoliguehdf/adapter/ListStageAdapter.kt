@@ -10,23 +10,21 @@ import stages.aikidoliguehdf.databinding.ListStagesBinding
 class ListStageAdapter: RecyclerView.Adapter<ListStageAdapter.ListStageViewHolder>() {
 
     var items = ArrayList<Stages>()
-    private lateinit var mListener : onItemClickListener
+    private lateinit var mListener : OnItemClickListener
 
-    interface onItemClickListener{
+    interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
 
-    fun setOnItemClickListener(listener: onItemClickListener){
+    fun setOnItemClickListener(listener: OnItemClickListener){
         mListener = listener
     }
 
     fun setDataList(items: List<Stages>) {
         this.items = items.toMutableList() as ArrayList<Stages>
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListStageViewHolder {
-
         val binding = ListStagesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListStageViewHolder(binding, mListener)
     }
@@ -37,9 +35,9 @@ class ListStageAdapter: RecyclerView.Adapter<ListStageAdapter.ListStageViewHolde
         holder.binding.txtDate.text = item.startdate
     }
 
-    class ListStageViewHolder (val binding: ListStagesBinding, listener: onItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ListStageViewHolder (val binding: ListStagesBinding, listener: OnItemClickListener): RecyclerView.ViewHolder(binding.root) {
         init{
-            itemView.setOnClickListener(){
+            itemView.setOnClickListener{
                 listener.onItemClick(adapterPosition)
             }
         }

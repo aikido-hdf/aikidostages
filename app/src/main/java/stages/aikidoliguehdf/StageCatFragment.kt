@@ -22,7 +22,7 @@ class StageCatFragment<DataBaseHandler>  : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?{
+    ): View{
         binding = FragmentStageCatBinding.inflate(inflater, container, false)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = catAdapter
@@ -30,19 +30,15 @@ class StageCatFragment<DataBaseHandler>  : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.title = "Catégories de stages"
-        catAdapter.setOnItemClickListener(object : ListCatAdapter.onItemClickListener {
+        catAdapter.setOnItemClickListener(object : ListCatAdapter.OnItemClickListener {
 
             override fun onItemClick(position: Int) {
                 val idCat = catAdapter.categoriesFiltered[position].idcat
                 val action = StageCatFragmentDirections.actionStageCatFragmentToStageListFragment(
-                ).setIdCategory(idCat.toString())
+                ).setIdCategory(idCat)
                 view.findNavController().navigate(action)
             }
         })

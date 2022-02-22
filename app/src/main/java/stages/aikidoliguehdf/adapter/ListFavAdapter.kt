@@ -1,29 +1,26 @@
 package stages.aikidoliguehdf.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import stages.aikidoliguehdf.data.Favorites
 import stages.aikidoliguehdf.data.Stages
 import stages.aikidoliguehdf.databinding.ListFavoritesBinding
 
 
 class ListFavAdapter : RecyclerView.Adapter<ListFavAdapter.ListFavViewHolder>() {
     var items = ArrayList<Stages>()
-    private lateinit var mListener : onItemClickListener
+    private lateinit var mListener : OnItemClickListener
 
-    interface onItemClickListener{
+    interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
 
-    fun setOnItemClickListener(listener: onItemClickListener){
+    fun setOnItemClickListener(listener: OnItemClickListener){
         mListener = listener
     }
 
     fun setDataList(items: List<Stages>) {
         this.items = items.toMutableList() as ArrayList<Stages>
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -43,26 +40,21 @@ class ListFavAdapter : RecyclerView.Adapter<ListFavAdapter.ListFavViewHolder>() 
     override fun getItemCount(): Int {
         return items.size
     }
-    fun getFavId (position: Int): String{
-        val item =  items[position].idstages.toString()
-        return item
 
+    fun getFavId(position: Int): String {
+        return items[position].idstages.toString()
     }
 
 
     fun deleteItem(position: Int){
-
         items.removeAt(position)
-
-        notifyDataSetChanged()
-
     }
 
 
 
-    class ListFavViewHolder (val binding : ListFavoritesBinding, listener: onItemClickListener): RecyclerView.ViewHolder(binding.root){
+    class ListFavViewHolder (val binding : ListFavoritesBinding, listener: OnItemClickListener): RecyclerView.ViewHolder(binding.root){
         init{
-            itemView.setOnClickListener(){
+            itemView.setOnClickListener{
                 listener.onItemClick(adapterPosition)
             }
         }

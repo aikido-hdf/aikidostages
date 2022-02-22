@@ -3,7 +3,6 @@ package stages.aikidoliguehdf
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -15,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
-    lateinit var dao: StagesDao
+    private lateinit var dao: StagesDao
     lateinit var db: StagesRoomDatabase
 
     @RequiresApi(Build.VERSION_CODES.O)

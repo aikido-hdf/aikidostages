@@ -22,7 +22,7 @@ class StagePlaceFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?{
+    ): View{
         binding = FragmentStagePlaceBinding.inflate(inflater, container, false)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = placesAdapter
@@ -37,14 +37,14 @@ class StagePlaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.title = "Lieux de stages"
-        placesAdapter.setOnItemClickListener(object : ListPlacesAdapter.onItemClickListener {
+        placesAdapter.setOnItemClickListener(object : ListPlacesAdapter.OnItemClickListener {
 
             override fun onItemClick(position: Int) {
 
                 val idPlace = placesAdapter.placesFiltered[position].idplace
                 val action = StagePlaceFragmentDirections.actionStagePlaceFragmentToStageListFragment(
 
-                ).setIdPlaces(idPlace.toString())
+                ).setIdPlaces(idPlace)
                 view.findNavController().navigate(action)
             }
         })
