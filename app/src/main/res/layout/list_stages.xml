@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     >
 
 
@@ -12,7 +11,6 @@
         android:layout_marginBottom="1dp"
         android:background="@color/backgroundList"
         android:paddingTop="16dp"
-
         android:paddingBottom="16dp">
 
         <TextView

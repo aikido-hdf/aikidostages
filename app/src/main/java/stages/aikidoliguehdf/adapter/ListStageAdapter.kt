@@ -1,10 +1,14 @@
 package stages.aikidoliguehdf.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import stages.aikidoliguehdf.data.Stages
 import stages.aikidoliguehdf.databinding.ListStagesBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class ListStageAdapter: RecyclerView.Adapter<ListStageAdapter.ListStageViewHolder>() {
@@ -29,10 +33,16 @@ class ListStageAdapter: RecyclerView.Adapter<ListStageAdapter.ListStageViewHolde
         return ListStageViewHolder(binding, mListener)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ListStageViewHolder, position: Int) {
         val item = items[position]
+        val startDate = item.startdate
+        val europeanDatePattern = "dd.MM.yyyy"
+        val europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern)
+        val niceDate = europeanDateFormatter.format(LocalDate.parse(startDate))
+
         holder.binding.txtTitle.text = item.title
-        holder.binding.txtDate.text = item.startdate
+        holder.binding.txtDate.text = niceDate
     }
 
     class ListStageViewHolder (val binding: ListStagesBinding, listener: OnItemClickListener): RecyclerView.ViewHolder(binding.root) {
