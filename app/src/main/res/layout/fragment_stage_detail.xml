@@ -6,8 +6,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16sp"
-        android:orientation="vertical">
+      >
 
         <TextView
             android:id="@+id/detItemTitle"
@@ -19,46 +20,42 @@
             android:textStyle="bold" />
 
 
-
         <TextView
             android:id="@+id/detItemStartdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Date du stage"
-            />
+            android:text="Date du stage" />
 
         <TextView
             android:id="@+id/detItemStartHour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text=""
-            />
+            android:text="" />
 
 
         <TextView
             android:id="@+id/detItemLink"
-            android:autoLink="web"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Lien"
-            />
+            android:autoLink="web"
+            android:text="Lien" />
+
         <TextView
             android:id="@+id/detItemCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text=""
-            />
+            android:text="" />
+
         <TextView
             android:id="@+id/detItemCat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text=""
-            />
+            android:text="" />
 
         <TextView
             android:id="@+id/detItemPlace"
@@ -71,17 +68,17 @@
             android:id="@+id/fabDirection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
+            android:clickable="true"
             app:srcCompat="@drawable/ic_baseline_directions_car_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabFavorite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_marginBottom="10dp"
+            android:clickable="true"
             app:srcCompat="@drawable/ic_baseline_favorite_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

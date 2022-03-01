@@ -1,5 +1,6 @@
 package stages.aikidoliguehdf.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -37,9 +38,7 @@ class ListFavAdapter : RecyclerView.Adapter<ListFavAdapter.ListFavViewHolder>() 
         holder.binding.txtDate.text = item.startdate
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+
 
     fun getFavId(position: Int): String {
         return items[position].idstages.toString()
@@ -48,6 +47,7 @@ class ListFavAdapter : RecyclerView.Adapter<ListFavAdapter.ListFavViewHolder>() 
 
     fun deleteItem(position: Int){
         items.removeAt(position)
+        notifyItemRemoved(position);
     }
 
 
@@ -58,5 +58,8 @@ class ListFavAdapter : RecyclerView.Adapter<ListFavAdapter.ListFavViewHolder>() 
                 listener.onItemClick(adapterPosition)
             }
         }
+    }
+    override fun getItemCount(): Int {
+        return items.size
     }
 }

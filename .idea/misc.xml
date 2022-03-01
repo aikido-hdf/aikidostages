@@ -30,10 +30,14 @@
         <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/coordinator_layout.xml" value="0.41938405797101447" />
         <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/fragment_fav_list.xml" value="0.41938405797101447" />
         <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/fragment_stage_cat.xml" value="0.41938405797101447" />
+        <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/fragment_stage_detail.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/fragment_stage_list.xml" value="0.14661458333333333" />
+        <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/fragment_start.xml" value="0.15" />
         <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/list_categories.xml" value="0.13269927536231885" />
-        <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/list_favorites.xml" value="0.25" />
+        <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/list_favorites.xml" value="0.22" />
         <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/list_places.xml" value="0.13269927536231885" />
         <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/list_stages.xml" value="0.13269927536231885" />
+        <entry key="..\:/Users/carol/StudioProjects/aikidostages/app/src/main/res/layout/start_activity.xml" value="0.191006600660066" />
       </map>
     </option>
   </component>

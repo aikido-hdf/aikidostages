@@ -55,16 +55,11 @@ class FavListFragment<DataBaseHandler>  : Fragment(R.layout.fragment_fav_list) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
                     ItemTouchHelper.LEFT ->{
-
                         val idfav = adapter.getFavId(viewHolder.adapterPosition)
-
                         adapter.deleteItem(viewHolder.adapterPosition)
-
                         deleteFav(idfav)
-
                         Snackbar.make(binding.recyclerView,"Favori supprimé", Snackbar.LENGTH_LONG)
                         .show()
-
                     }
                 }
             }
