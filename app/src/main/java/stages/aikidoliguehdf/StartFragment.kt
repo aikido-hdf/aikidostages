@@ -1,5 +1,6 @@
 package stages.aikidoliguehdf
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ class StartFragment<DataBaseHandler> : Fragment(R.layout.fragment_start) {
     private lateinit var dao: StagesDao
     lateinit var db: StagesRoomDatabase
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -25,7 +25,7 @@ class StageListFragment<DataBaseHandler> : Fragment(R.layout.fragment_stage_list
     val adapter = ListStageAdapter()
     private var mContext: Context? = null
     private lateinit var binding: FragmentStageListBinding
-    private val args : StageListFragmentArgs by navArgs<StageListFragmentArgs>()
+    private val args : StageListFragmentArgs by navArgs()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(

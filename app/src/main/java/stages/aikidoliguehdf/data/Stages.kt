@@ -49,7 +49,7 @@ data class StagesCatMap(
 
 @Entity(tableName = "Favorites")
 data class Favorites(
-    @PrimaryKey (autoGenerate = true) @ColumnInfo(name = "idfav") var idfav: Int = 0,
+    @PrimaryKey (autoGenerate = true) @ColumnInfo(name = "idfav") var idfav: Int,
     @ColumnInfo(name = "idstagesfav") var idstagesfav: String
 )
 
@@ -60,27 +60,3 @@ data class StagesFavMap(
     var idfavmap: String,
 )
 
-
-data class StagesWithCategories(
-    @Embedded var stages: Stages,
-    @Relation(
-        entity = Categories::class,
-        parentColumn = "idstages",
-        entityColumn = "idcat",
-        associateBy = Junction(
-            StagesCatMap::class,
-            parentColumn = "idstagesmap",
-            entityColumn = "idcatmap"
-        )
-    )
-    var categories: Categories
-)
-
-data class StagesinFavorites(
-    @Embedded val stages: Stages,
-    @Relation(
-        parentColumn = "idstages",
-        entityColumn = "idstagesfav"
-    )
-    val favorites: Favorites
-)

@@ -18,6 +18,7 @@ import org.json.JSONArray
 import org.json.JSONTokener
 import stages.aikidoliguehdf.data.*
 import java.net.URL
+import java.time.LocalDate
 import javax.net.ssl.HttpsURLConnection
 
 @DelicateCoroutinesApi
@@ -79,7 +80,7 @@ class SplashScreen : AppCompatActivity() {
             httpsURLConnection.doOutput = false
             // Check if the connection is successful
             val responseCode = httpsURLConnection.responseCode
-            Log.i("test connexion", responseCode.toString())
+
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 val response = httpsURLConnection.inputStream.bufferedReader()
                     .use { it.readText() }  // defaults to UTF-8
@@ -143,8 +144,10 @@ class SplashScreen : AppCompatActivity() {
                                 link,
                                 content
                             )
-                        Log.i("stages", model.toString())
+
                         dao.insertAll(model)
+                        val current = LocalDate.now().minusMonths(1)
+                        db.stagesDao().deleteAllxMonths(current.toString())
                     }
                 }
             } else {
@@ -174,7 +177,7 @@ class SplashScreen : AppCompatActivity() {
 
                         val id = jsonArrayCat.getJSONObject(i).getString("id")
                         val name = jsonArrayCat.getJSONObject(i).getString("name")
-                        val count = jsonArrayCat.getJSONObject(i).getString("count")
+                        val count = dao.countcat(id)
 
                         val modelforCat =
                             Categories(
@@ -186,7 +189,6 @@ class SplashScreen : AppCompatActivity() {
                         val listcat = mutableListOf(id.toLong())
 
                         for (item in listcat) {
-                            //val tempMap = mutableMapOf<String, String>()
                             val items = id.toString()
                             val test = db.stagesDao().getByCat(items)
 
@@ -194,7 +196,7 @@ class SplashScreen : AppCompatActivity() {
                                 val idstages = value.idstages.toString()
                                 val newList = mutableListOf<StagesCatMap>()
 
-                                listcat.forEach {
+                                repeat(listcat.size) {
                                     newList += StagesCatMap(idstages, items)
                                 }
                                 dao.insertAllStagesCatMap(newList)
@@ -203,11 +205,7 @@ class SplashScreen : AppCompatActivity() {
                         }
                     }
                 }
-            } else {
-                //Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
             }
-
-
         }
     }
 
@@ -241,7 +239,7 @@ class SplashScreen : AppCompatActivity() {
 
                         val id = jsonArray.getJSONObject(i).getString("id")
                         val name = jsonArray.getJSONObject(i).getString("name")
-                        val count = jsonArray.getJSONObject(i).getString("count")
+                        val count = dao.countplaces(id)
                         val address = jsonArray.getJSONObject(i).getString("address")
                         val model =
                             Places(

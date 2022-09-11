@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatter
 
 class StageDetailFragment : Fragment() {
 
-    private val args : StageDetailFragmentArgs by navArgs<StageDetailFragmentArgs>()
+    private val args : StageDetailFragmentArgs by navArgs()
     private lateinit var dao: StagesDao
     lateinit var db: StagesRoomDatabase
 
@@ -263,7 +263,7 @@ class StageDetailFragment : Fragment() {
     private fun insertfav(idfav: Int, idstagesfav: String){
         db = StagesRoomDatabase.getInstance(activity as AppCompatActivity)
         dao = db.stagesDao()
-        dao.insertFav(Favorites(0, idstagesfav = idstagesfav))
+        dao.insertFav(Favorites(id, idstagesfav = idstagesfav))
 
     }
 

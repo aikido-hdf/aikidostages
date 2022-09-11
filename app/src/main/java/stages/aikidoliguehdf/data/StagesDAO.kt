@@ -47,6 +47,8 @@ interface StagesDao {
     @Delete
     fun delete(stage: Stages)
 
+    @Query("DELETE FROM Stages WHERE startdate < :xmonthsold")
+    fun deleteAllxMonths(xmonthsold: String)
 
 
     //
@@ -57,7 +59,7 @@ interface StagesDao {
     fun viewAllCategories(): Flow<List<Categories>>
 
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE) // Insert single Category
+    @Insert(onConflict = OnConflictStrategy.REPLACE) // Insert single Category
     fun insertCategory(category: Categories): Long
 
 
@@ -73,11 +75,11 @@ interface StagesDao {
     @Query("SELECT idcat FROM Categories")
     fun listIdCat(): List<String>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(vararg categories: Categories)
-
     @Delete
     fun delete(categories: Categories)
+
+    @Query("SELECT COUNT(*) FROM Stages WHERE idcategory = :idcategory")
+    suspend fun countcat(idcategory: String): String
 
     @Insert(onConflict = OnConflictStrategy.IGNORE) // Insert single Category
     fun insert(categories : Categories ): Long
@@ -88,9 +90,6 @@ interface StagesDao {
 
     @Query("SELECT * FROM Places")
     fun viewAllPlaces(): Flow<List<Places>>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertPlaces(places : Places )
 
     @Query("DELETE FROM Places")
     suspend fun deleteAllPlaces()
@@ -104,12 +103,14 @@ interface StagesDao {
     @Query("SELECT address FROM Places WHERE idplace = :idplace")
     fun loadAddressPlaceById(idplace: String): String
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllPlaces(vararg places: Places)
 
     @Delete
     fun delete(places: Places)
 
+    @Query("SELECT COUNT(*) FROM Stages WHERE places = :idplace")
+    suspend fun countplaces(idplace: String): String
 
     //
     //ManytoMany Categories -> Stages

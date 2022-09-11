@@ -1,6 +1,5 @@
 package stages.aikidoliguehdf.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -47,7 +46,7 @@ class ListFavAdapter : RecyclerView.Adapter<ListFavAdapter.ListFavViewHolder>() 
 
     fun deleteItem(position: Int){
         items.removeAt(position)
-        notifyItemRemoved(position);
+        notifyItemRemoved(position)
     }
 
 
