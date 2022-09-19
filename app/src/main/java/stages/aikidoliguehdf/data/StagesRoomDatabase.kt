@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 const val DATABASE_NAME = "StagesDatabase"
-@Database(entities = [Stages::class,Categories::class,Places::class,StagesCatMap::class, Favorites::class, StagesFavMap::class], version = 1)
+@Database(entities = [Stages::class,Categories::class,Places::class,StagesCatMap::class, Favorites::class, StagesFavMap::class], version = 2)
 
 abstract class StagesRoomDatabase : RoomDatabase() {
 
@@ -19,7 +19,7 @@ abstract class StagesRoomDatabase : RoomDatabase() {
             if (instance == null) {
                 instance = Room.databaseBuilder(context,StagesRoomDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
-
+                    .fallbackToDestructiveMigration()
                     .build()
             }
             return instance as StagesRoomDatabase

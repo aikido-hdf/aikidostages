@@ -176,13 +176,11 @@ class StageDetailFragment : Fragment() {
         } else {
             addfav.setOnClickListener {
                 val idstagetofav = item.first().idstages
-                this.insertfav(idfav = 0, idstagesfav = idstagetofav.toString())
+                this.insertfav(idStagesFav = idstagetofav.toString())
                 val toast = Toast.makeText(context,"Stage ajouté dans les favoris",Toast.LENGTH_SHORT)
                 toast.show()
             }
         }
-
-
 
 
         /*GPS Google Maps*/
@@ -237,7 +235,6 @@ class StageDetailFragment : Fragment() {
             StagesRoomDatabase::class.java, "StagesDatabase"
         ).allowMainThreadQueries().build()
 
-
         return db.stagesDao().getCatName(idstages = idstages)
     }
 
@@ -247,31 +244,28 @@ class StageDetailFragment : Fragment() {
             StagesRoomDatabase::class.java, "StagesDatabase"
         ).allowMainThreadQueries().build()
 
-
         return db.stagesDao().loadNamePlaceById(idplace = idplace)
     }
+
     private fun getPlaceAddress(idplace: String): String {
         val db = Room.databaseBuilder(
             activity as AppCompatActivity,
             StagesRoomDatabase::class.java, "StagesDatabase"
         ).allowMainThreadQueries().build()
 
-
         return db.stagesDao().loadAddressPlaceById(idplace = idplace)
     }
 
-    private fun insertfav(idfav: Int, idstagesfav: String){
+    private fun insertfav(idStagesFav: String){
         db = StagesRoomDatabase.getInstance(activity as AppCompatActivity)
         dao = db.stagesDao()
-        dao.insertFav(Favorites(id, idstagesfav = idstagesfav))
-
+        dao.insertFav(Favorites(idfav = null, idstagesfav = idStagesFav))
     }
 
     private fun checkFav(idstage: String): String {
         db = StagesRoomDatabase.getInstance(activity as AppCompatActivity)
         dao = db.stagesDao()
         return db.stagesDao().getFavsbyStageId(idstage = idstage)
-
     }
 }
 

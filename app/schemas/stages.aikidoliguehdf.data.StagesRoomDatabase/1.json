@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6445336345610790484accf8edf827a3",
+    "identityHash": "f99fb20947979acd8ebc414c2c8c60f2",
     "entities": [
       {
         "tableName": "Stages",
@@ -223,13 +223,13 @@
       },
       {
         "tableName": "Favorites",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idfav` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `idstagesfav` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idfav` INTEGER PRIMARY KEY AUTOINCREMENT, `idstagesfav` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "idfav",
             "columnName": "idfav",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "idstagesfav",
@@ -288,7 +288,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6445336345610790484accf8edf827a3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f99fb20947979acd8ebc414c2c8c60f2')"
     ]
   }
 }

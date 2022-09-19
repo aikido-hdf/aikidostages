@@ -49,7 +49,7 @@ data class StagesCatMap(
 
 @Entity(tableName = "Favorites")
 data class Favorites(
-    @PrimaryKey (autoGenerate = true) @ColumnInfo(name = "idfav") var idfav: Int,
+    @PrimaryKey (autoGenerate = true) @ColumnInfo(name = "idfav") var idfav: Int? = null,
     @ColumnInfo(name = "idstagesfav") var idstagesfav: String
 )
 

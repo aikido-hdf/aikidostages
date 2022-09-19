@@ -129,7 +129,7 @@ interface StagesDao {
     //Favorites
     //
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertFav(favorites : Favorites )
 
     @Query("DELETE FROM Favorites")
