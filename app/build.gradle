@@ -13,8 +13,8 @@ android {
         applicationId "stages.aikidoliguehdf"
         minSdk 21
         targetSdk 31
-        versionCode 8
-        versionName "1.2.3"
+        versionCode 9
+        versionName "1.2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
@@ -23,6 +23,7 @@ android {
             }
         }
         signingConfig signingConfigs.debug
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -36,6 +37,7 @@ android {
         dataBinding true
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -89,4 +91,6 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.5.0-beta01")
 
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 }
