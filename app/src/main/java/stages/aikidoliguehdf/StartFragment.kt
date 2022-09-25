@@ -94,6 +94,9 @@ class StartFragment<DataBaseHandler> : Fragment(R.layout.fragment_start) {
             val action = StartFragmentDirections.actionStartFragmentToStageDetailFragment(idNextStage.toString()).setIdStage(idNextStage.toString())
             view?.findNavController()?.navigate(action)
         }
+
+        binding.version.text = BuildConfig.VERSION_NAME
+
       return binding.root
     }
 }
