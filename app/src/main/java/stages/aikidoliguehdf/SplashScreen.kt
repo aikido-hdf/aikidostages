@@ -86,6 +86,9 @@ class SplashScreen : AppCompatActivity() {
                     .use { it.readText() }  // defaults to UTF-8
                 withContext(Dispatchers.Main) {
 
+                    //Delete all entry before uploading JSON (refresh db)
+                    dao.deleteAll()
+
                     // Convert raw JSON to pretty JSON using GSON library
 
                     val jsonArray = JSONTokener(response).nextValue() as JSONArray
@@ -145,9 +148,10 @@ class SplashScreen : AppCompatActivity() {
                                 content
                             )
 
+
                         dao.insertAll(model)
                         val current = LocalDate.now().minusMonths(1)
-                        db.stagesDao().deleteAllxMonths(current.toString())
+                        dao.deleteAllxMonths(current.toString())
                     }
                 }
             } else {
