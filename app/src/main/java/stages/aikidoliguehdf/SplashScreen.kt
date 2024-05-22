@@ -85,7 +85,7 @@ class SplashScreen : AppCompatActivity() {
                 val response = httpsURLConnection.inputStream.bufferedReader()
                     .use { it.readText() }  // defaults to UTF-8
                 withContext(Dispatchers.Main) {
-
+                    try{
                     //Delete all entry before uploading JSON (refresh db)
                     dao.deleteAll()
 
@@ -153,9 +153,14 @@ class SplashScreen : AppCompatActivity() {
                         val current = LocalDate.now().minusMonths(1)
                         dao.deleteAllxMonths(current.toString())
                     }
+                } catch(e: Exception){
+                        Log.e("JSONParsingError1", "Error parsing JSON response", e)
+                        Toast.makeText(this@SplashScreen, "Echec de la mise à jour des données.", Toast.LENGTH_LONG).show()
+                    }
                 }
             } else {
-                //Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
+                Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
+
             }
             val urlCategories =
                 URL("https://aikido-hdf.fr/wp-json/wp/v2/mec_category?per_page=50")
@@ -235,7 +240,7 @@ class SplashScreen : AppCompatActivity() {
                 val response = httpsURLConnection.inputStream.bufferedReader()
                     .use { it.readText() }  // defaults to UTF-8
                 withContext(Dispatchers.Main) {
-
+                    try{
                     // Convert raw JSON to pretty JSON using GSON library
 
                     val jsonArray = JSONTokener(response).nextValue() as JSONArray
@@ -252,7 +257,12 @@ class SplashScreen : AppCompatActivity() {
 
                         dao.insertAllPlaces(model)
                     }
-                }
+                } catch(e: Exception){
+                        Log.e("JSONParsingError2", "Error parsing JSON Locs response", e)
+                        Toast.makeText(this@SplashScreen, "Echec de la mise à jour des données.", Toast.LENGTH_LONG).show()
+
+
+                    }                }
             } else {
                 Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
             }
