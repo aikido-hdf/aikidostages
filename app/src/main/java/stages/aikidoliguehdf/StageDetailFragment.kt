@@ -131,6 +131,8 @@ class StageDetailFragment : Fragment() {
                 "7" -> endhours = "07"
                 "8" -> endhours = "08"
                 "9" -> endhours = "09"
+                "10" -> endhours = "10"
+                "11" -> endhours = "11"
                 "12" -> endhours = "12"
             }
         }
